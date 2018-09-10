@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--1. introduce properties of database-->
+    <context:property-placeholder location="classpath:jdbc.properties"></context:property-placeholder>
+
+    <!--2. database connecting pool-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <!--Configurations of database connection-->
+        <property name="driverClass" value="${jdbc.driver}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+
+        <!--c3p0 attributes-->
+        <property name="maxPoolSize" value="30"/>
+        <property name="minPoolSize" value="1"/>
+        <property name="checkoutTimeout" value="1000"/>
+        <property name="autoCommitOnClose" value="false"/>
+    </bean>
+
+    <!--3.Configurations of SqlSessionFactory, which is used by MyBatis-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!--load mybatis-config,xml-->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!--scan entity package with alias-->
+        <property name="typeAliasesPackage" value="com.xy.entity"/>
+        <!--scan mappers package, xxxmapper.xml contains feasible sql statements-->
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+    </bean>
+
+    <!--Configurations of DAO interface package-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <!--scan dao package-->
+        <property name="basePackage" value="com.xy.dao"/>
+    </bean>
+</beans>

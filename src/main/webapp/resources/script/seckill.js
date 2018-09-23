@@ -2,13 +2,13 @@ var seckill = {
     //封装URL
     URL: {
         now: function () {
-            return '/seckill/time/now';
+            return '/time/now';
         },
         exposer: function (seckillId) {
-            return '/seckill/' + seckillId + '/exposer';
+            return '/' + seckillId + '/exposer';
         },
         execution: function (seckillId, md5) {
-            return '/seckill/' + seckillId + "/" + md5 +'/execution';
+            return '/' + seckillId + "/" + md5 +'/execution';
         }
 
     },

@@ -19,12 +19,16 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-@RequestMapping("/seckill")
 public class SeckillController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private SeckillService seckillService;
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String home(){
+        return "redirect:/list";
+    }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model) {

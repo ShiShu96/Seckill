@@ -94,7 +94,7 @@ var seckill = {
                     var inputPhone = $('#killPhoneKey').val();
                     console.log(inputPhone);
                     if (seckill.validatePhone(inputPhone)) {
-                        $.cookie('killPhone', inputPhone, {expires: 7, path: '/seckill'});
+                        $.cookie('killPhone', inputPhone, {expires: 7, path: '/'});
                         window.location.reload();
                     } else {
                         $('#killPhoneMessage').hide().html('<label class="label label-danger">手机号错误</label>').show(300);
